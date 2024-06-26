@@ -11,15 +11,15 @@ import numpy as np
 
 def fill_matrix(vector, shape=(7, 5), indices=None):
     """
-    将向量按照给定的索引填充到指定形状的矩阵中。
+    Fills the vector with a matrix of the specified shape at the given index.
 
     Args:
-    vector: 要填充的向量。
-    shape: 输出矩阵的形状，默认为 (7, 5)。
-    indices: 填充的位置索引，默认为 None，表示根据默认规则填充。
+    vector
+    shape (7, 5)
+    indices 10-20 system
 
     Returns:
-    numpy.ndarray: 填充好的矩阵。
+    numpy.ndarray: modified matrix
     """
     if indices is None:
         # 默认的填充位置索引
@@ -48,8 +48,8 @@ test_matrix = fill_matrix(test_vector)
 print(test_matrix)
 
 # 定义一个 72*4*26 的样本集合
-sample_set = np.load('G:/entire-data/entire-data/demo_dataset.npy')
-sample_labels = np.load('G:/entire-data/entire-data/sample_labels.npy')
+sample_set = np.load('~/demo_dataset.npy')
+sample_labels = np.load('~/sample_labels.npy')
 
 # 初始化一个空的列表用于存储填充后的矩阵
 filled_matrices_list = []
@@ -104,7 +104,6 @@ binarized_true_labels = label_binarize(sample_labels_shuffled, classes=np.arange
 
 
 predicted_labels=[]
-
 accuracies = []
 sensitivities = []
 specificities = []
@@ -117,8 +116,6 @@ aucs = []
 mean_fpr = np.linspace(0, 1, 100)
 y_scores=[]
 y_tests= []
-# Initialize figure
-plt.figure(figsize=(8, 6))
 
 # Initialize StratifiedKFold
 kf = StratifiedKFold(n_splits=5)
@@ -131,7 +128,6 @@ for i, (train_index, test_index) in enumerate(kf.split(filled_matrices_list_shuf
     model = create_3d_cnn(input_shape=(4, 7, 5, 1))
     optimizer = Nadam()
     model.compile(optimizer=optimizer, loss='binary_crossentropy', metrics=['accuracy']) # use binary crossentropy for binary labels
-    
     model.fit(X_train, y_train, epochs=100, batch_size=36, verbose=0)
     
     # Compute ROC curve and area under the curve
