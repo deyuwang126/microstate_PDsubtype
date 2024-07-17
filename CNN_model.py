@@ -74,6 +74,8 @@ from keras.regularizers import l2
 def create_3d_cnn(input_shape):
     model = Sequential()
     model.add(Conv3D(128, kernel_size=(2, 2, 2), activation='relu',input_shape=input_shape, kernel_regularizer=l2(0.005)))
+    model.add(BatchNormalization())
+    model.add(Dropout(0.25))
     model.add(Conv3D(128, kernel_size=(2, 2, 2),  activation='relu',kernel_regularizer=l2(0.005)))
     model.add(Flatten())
     model.add(Dense(128, activation='relu'))
